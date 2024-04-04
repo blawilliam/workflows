@@ -6,7 +6,11 @@ on:
       SERVICE:
         required: true
         type: string
-
+    secrets:
+      DOCKER_USERNAME:
+        required: true
+      DOCKER_PASSWORD:
+        required: true
 
 
 jobs:
