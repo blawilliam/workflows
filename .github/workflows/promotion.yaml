@@ -37,8 +37,8 @@ jobs:
         env:
           SHORT_SHA: ${{ steps.extract_short_sha.outputs.SHORT_SHA }}
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:${SHORT_SHA} .
-          docker tag ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:${SHORT_SHA} ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ inputs.SERVICE }}:${SHORT_SHA} .
+          docker tag ${{ secrets.DOCKER_USERNAME }}/${{ inputs.SERVICE }}:${SHORT_SHA} ${{ secrets.DOCKER_USERNAME }}/${{ inputs.SERVICE }}:latest
 
       - name: Login to DockerHub
         uses: docker/login-action@v1
@@ -50,8 +50,8 @@ jobs:
         env:
           SHORT_SHA: ${{ steps.extract_short_sha.outputs.SHORT_SHA }}
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:$SHORT_SHA
-          docker push ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/${{ inputs.SERVICE }}:$SHORT_SHA
+          docker push ${{ secrets.DOCKER_USERNAME }}/${{ inputs.SERVICE }}:latest
 
   commit-to-repo:
     needs: build-and-deploy  # This job depends on the completion of the previous job
@@ -79,7 +79,7 @@ jobs:
       - name: Make Changes
         run: |
           cd target-repo
-          sed -i 's|docker.io/blawilliam571/${{ github.event.repository.name }}:.*|docker.io/blawilliam571/${{ github.event.repository.name }}:${{ steps.extract_short_sha.outputs.SHORT_SHA }}|' ${{ github.event.repository.name }}/deployment.yaml
+          sed -i 's|docker.io/blawilliam571/${{ inputs.SERVICE }}:.*|docker.io/blawilliam571/${{ inputs.SERVICE }}:${{ steps.extract_short_sha.outputs.SHORT_SHA }}|' ${{ inputs.SERVICE }}/deployment.yaml
 
       - name: Make Changes
         run: |
