@@ -59,6 +59,17 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/${{ inputs.SERVICE }}:${SHORT_SHA}
           docker push ${{ secrets.DOCKER_USERNAME }}/${{ inputs.SERVICE }}:latest
 
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: general
+          SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
+          SLACK_ICON: https://github.com/rtCamp.png?size=48
+          SLACK_MESSAGE: 'Status: :rocket:'
+          SLACK_TITLE: DOcker Build
+          SLACK_USERNAME: rtCamp
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+
   commit-to-repo:
     needs: build-and-deploy  # This job depends on the completion of the previous job
     runs-on: ubuntu-latest
@@ -100,3 +111,14 @@ jobs:
           git push origin main
         env:
           TARGET_REPO_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
+
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: general
+          SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
+          SLACK_ICON: https://github.com/rtCamp.png?size=48
+          SLACK_MESSAGE: 'Status: :rocket:'
+          SLACK_TITLE: Image Sha Update
+          SLACK_USERNAME: rtCamp
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
