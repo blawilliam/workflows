@@ -4,7 +4,9 @@ on:
   workflow_call:
     inputs:
       SERVICE:
-        reuired: true
+        required: true
+        type: string
+
 
 
 jobs:
