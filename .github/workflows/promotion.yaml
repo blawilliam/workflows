@@ -37,8 +37,8 @@ jobs:
         env:
           SHORT_SHA: ${{ steps.extract_short_sha.outputs.SHORT_SHA }}
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ inputs.SERVICE }}:${SHORT_SHA} .
-          docker tag ${{ secrets.DOCKER_USERNAME }}/${{ inputs.SERVICE }}:${SHORT_SHA} ${{ secrets.DOCKER_USERNAME }}/${{ inputs.SERVICE }}:latest
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:${SHORT_SHA} .
+          docker tag ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:${SHORT_SHA} ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest
 
       - name: Login to DockerHub
         uses: docker/login-action@v1
