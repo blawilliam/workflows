@@ -50,7 +50,7 @@ jobs:
         env:
           SHORT_SHA: ${{ steps.extract_short_sha.outputs.SHORT_SHA }}
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/${{ inputs.SERVICE }}:$SHORT_SHA
+          docker push ${{ secrets.DOCKER_USERNAME }}/${{ inputs.SERVICE }}:${SHORT_SHA}
           docker push ${{ secrets.DOCKER_USERNAME }}/${{ inputs.SERVICE }}:latest
 
   commit-to-repo:
