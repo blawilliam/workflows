@@ -2,17 +2,7 @@ name: Build and Deploy Docker Image
 
 on:
   workflow_call:
-    secrets:
-      DB_USER:
-        required: false
-      DB_PASSWORD:
-        required: false
-      DOCKER_USERNAME:
-        required: true
-      DOCKER_PASSWORD:
-        required: true
-      TARGET_REPO_TOKEN:
-        required: true
+    inputs:
       SERVICE:
         reuired: true
 
