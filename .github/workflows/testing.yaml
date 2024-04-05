@@ -1,1 +1,49 @@
-#testing
+name: Testing Suite
+
+on:
+  workflow_call:
+    inputs:
+      TEST:
+        required: true
+        type: string
+    secrets:
+      SLACK_WEBHOOK_URL:
+        required: true
+
+jobs:
+  cypress-test:
+    if: ${{ github.event.inputs.TEST == 'cypress' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build UI
+        run: npm run dev &
+
+      - name: Wait for UI to be ready
+        run: |
+          npx wait-on http://localhost:3000
+
+      - name: Run Cypress tests
+        run: npx cypress run --headless --browser chrome
+
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: general
+          SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
+          SLACK_ICON: https://github.com/rtCamp.png?size=48
+          SLACK_MESSAGE: 'Status :rocket:'
+          SLACK_TITLE: Cypress Testing
+          SLACK_USERNAME: rtCamp
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
