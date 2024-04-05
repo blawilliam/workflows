@@ -12,7 +12,7 @@ on:
 
 jobs:
   cypress-test:
-    #if: ${{ github.event.inputs.TEST == 'cypress' }}
+    if: ${{ inputs.TEST == 'cypress' }}
     runs-on: ubuntu-latest
 
     steps:
