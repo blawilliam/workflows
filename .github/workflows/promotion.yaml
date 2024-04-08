@@ -21,6 +21,8 @@ on:
         required: false
       DB_PASSWORD:
         required: false
+      DB_DATABASE:
+        required: false
 
 
 jobs:
