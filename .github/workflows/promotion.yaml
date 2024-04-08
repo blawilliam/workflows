@@ -15,6 +15,12 @@ on:
         required: true
       SLACK_WEBHOOK_URL:
         required: true
+      DB_USER:
+        required: false
+      DB_HOST:
+        required: false
+      DB_PASSWORD:
+        required: false
 
 
 jobs:
