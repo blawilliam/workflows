@@ -23,6 +23,8 @@ on:
         required: false
       DB_DATABASE:
         required: false
+      NEXT_PUBLIC_BUILDER_API_KEY:
+        requird: false
 
 
 jobs:
