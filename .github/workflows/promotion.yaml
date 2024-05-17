@@ -40,6 +40,7 @@ jobs:
           echo "DB_PASSWORD=$DB_PASSWORD" >> .env
           echo "DB_HOST=$DB_HOST" >> .env
           echo "DB_DATABASE=$DB_DATABASE" >> .env
+          echo "NEXT_PUBLIC_BUILDER_API_KEY" >> .env
           export $(cat .env | xargs)
         env:
           DB_USER: ${{ secrets.DB_USER }}
