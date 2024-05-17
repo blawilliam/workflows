@@ -24,7 +24,7 @@ on:
       DB_DATABASE:
         required: false
       NEXT_PUBLIC_BUILDER_API_KEY:
-        requird: false
+        required: false
 
 
 jobs:
